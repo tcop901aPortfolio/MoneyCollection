@@ -59,47 +59,8 @@ const Tab2: React.FC = () => {
     );
   };
 
-  const [dragY, setDragY] = useState(0);
   const [saving, setSaving] = useState(false);
   const [savedFlash, setSavedFlash] = useState(false);
-
-  const handleStart = (e: React.TouchEvent | React.MouseEvent) => {
-    const y = "touches" in e ? e.touches[0].clientY : e.clientY;
-    setDragY(y);
-  };
-
-  const handleMove = (e: React.TouchEvent | React.MouseEvent) => {
-    if (dragY === 0 || saving) return;
-
-    const currentY = "touches" in e ? e.touches[0].clientY : e.clientY;
-    const delta = dragY - currentY;
-
-    // only allow upward swipe
-    if (delta > 0) {
-      const percent = Math.min(delta / window.innerHeight, 1);
-
-      setSwipePercent(percent);
-
-      if (percent > 0.25) {
-        setOutline(true);
-      } else {
-        setOutline(false);
-      }
-    }
-  };
-
-  const [swipePercent, setSwipePercent] = useState(0);
-  const [outline, setOutline] = useState(false);
-
-  const handleEnd = () => {
-    if (swipePercent > 0.75) {
-      triggerSave();
-    }
-
-    setDragY(0);
-    setSwipePercent(0);
-    setOutline(false);
-  };
 
   const triggerSave = () => {
     setSaving(true);
@@ -142,12 +103,6 @@ const Tab2: React.FC = () => {
   return (
     <IonPage>
       <IonContent fullscreen>
-        <div
-          className="swipe-area"
-          onTouchStart={handleStart}
-          onTouchMove={handleMove}
-          onTouchEnd={handleEnd}
-        ></div>
         <div className="entry-container">
           <div className="counter-block">
             <div className="counter-row">
@@ -256,7 +211,10 @@ const Tab2: React.FC = () => {
                   </IonButton>
                 ))}
             </div>
-          </div>    
+          </div>
+          <IonButton onClick={triggerSave}>
+            Save Entry
+          </IonButton>
         </div>
       </IonContent>
     </IonPage>
