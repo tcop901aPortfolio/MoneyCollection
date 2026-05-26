@@ -1,0 +1,7 @@
+{
+  "name": "TipDataCollection",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}

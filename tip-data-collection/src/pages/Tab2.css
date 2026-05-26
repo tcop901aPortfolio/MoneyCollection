@@ -1,0 +1,177 @@
+.entry-container {
+  height: 50%;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Gender buttons */
+.gender-row {
+  display: flex;
+  gap: 12px;
+}
+
+.gender-button {
+  flex: 1;
+  height: 55px;
+  font-size: 1rem;
+  font-weight: 600;
+  --border-radius: 14px;
+}
+
+.male {
+  --border-color: #3b82f6;   /* blue */
+  --color: #3b82f6;
+}
+
+.male.selected {
+  --background: #3b82f6;
+  --color: white;
+}
+
+.female {
+  --border-color: #ec4899;   /* pink */
+  --color: #ec4899;
+}
+
+.female.selected {
+  --background: #ec4899;
+  --color: white;
+}
+
+.counter-block {
+  border: 2px solid #ddd;
+  border-radius: 16px;
+  padding: 4px;
+  margin-top: 4px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Counter section */
+.counter-row {
+  display: flex;
+  align-items: center;
+}
+
+.counter-label {
+  flex: 1;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding-left: 16px;
+  border-radius: 12px;
+  background: transparent;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+}
+
+.reset-button {
+  height: 50px;
+  width: 50px;
+  --border-radius: 12px;
+}
+
+/* Number rows */
+.button-row {
+  display: flex;
+  gap: 10px;
+}
+
+.number-button {
+  flex: 1;
+  height: 50px;
+  font-size: 1rem;
+  --border-radius: 12px;
+}
+
+.money-button {
+  flex: 1;
+  height: 50px;
+  font-size: 1rem;
+  --border-radius: 12px;
+  --background: rgb(28, 213, 28);
+}
+
+.money-button:active {
+  --background: rgb(5, 76, 5);
+}
+
+.word-button {
+  flex: 1;
+  height: 50px;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  --border-radius: 12px;
+  --background: transparent;
+  --color: #ccc;
+  --border-color: #ccc;
+  --box-shadow: none;
+}
+
+.word-button.selected {
+  --background: #ccc; /* green for age selection */
+  --color: rgb(0, 0, 0);
+  --border-color: #ccc;
+}
+
+.tag-box {
+  border: 2px solid #ddd;
+  border-radius: 16px;
+  padding: 12px;
+  margin-top: 10px;
+}
+
+/* 2-column layout */
+.tag-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* same style as your other buttons */
+.tag-button {
+  height: 48px;
+  font-size: 0.85rem;
+  font-weight: 500;
+
+  --border-radius: 12px;
+  --background: transparent;
+  --color: #ffffff;
+  --border-color: #e09a4a;
+  --box-shadow: none;
+}
+
+/* selected state (same vibe as gender/age) */
+.tag-button.selected {
+  --background: #e09a4a;
+  --color: white;
+  --border-color: #e09a4a;
+}
+
+.swipe-container {
+  height: 100%;
+  transition: box-shadow 0.2s ease;
+}
+
+/* 25% state */
+.swipe-container.outline {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.6);
+}
+
+.saved-flash {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px 30px;
+  border-radius: 12px;
+  font-weight: bold;
+  z-index: 999;
+}
