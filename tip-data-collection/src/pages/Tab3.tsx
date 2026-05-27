@@ -8,19 +8,38 @@ import {
 } from '@ionic/react';
 
 import { useEffect, useState } from 'react';
-import { entries, Entry } from '../data/entries';
+import { getEntries } from '../data/storage';
+
+export const exportData = async () => {
+  const data = await getEntries();
+
+  const blob = new Blob([JSON.stringify(data, null, 2)], {
+    type: "application/json",
+  });
+
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "entries.json";
+  a.click();
+
+  URL.revokeObjectURL(url);
+};
 
 const Tab3: React.FC = () => {
-  const [data, setData] = useState<Entry[]>([]);
+  const [entries, setEntries] = useState<any[]>([]);
 
-  // refresh when tab loads
-  useEffect(() => {
-    setData([...entries]);
-  }, [entries.length]);
-
-  const refresh = () => {
-    setData([...entries]);
+  const loadEntries = async () => {
+    const data = await getEntries();
+    setEntries(data);
   };
+
+  useEffect(() => {
+    loadEntries();
+  }, []);
+
+  const boolDisplay = (value: boolean) => (value ? "Y" : "-");
 
   return (
     <IonPage>
@@ -31,47 +50,67 @@ const Tab3: React.FC = () => {
       </IonHeader>
 
       <IonContent fullscreen>
-        <div style={{ padding: 12 }}>
 
-          <IonButton expand="block" onClick={refresh}>
-            Refresh
-          </IonButton>
+        <IonButton expand="block" onClick={loadEntries}>
+          Refresh
+        </IonButton>
 
-          {data.length === 0 && (
-            <div style={{ marginTop: 20, opacity: 0.6 }}>
-              No entries yet
-            </div>
-          )}
+        <div style={{ overflowX: 'auto', padding: 10 }}>
+          <table
+            style={{
+              width: '100%',
+              borderCollapse: 'collapse',
+              fontSize: '12px',
+              minWidth: '900px',
+              textAlign: 'left',
+            }}
+          >
+            <thead>
+              <tr>
+                <th>Tip</th>
+                <th className='graph-title'>Gender</th>
+                <th className='graph-title'>Age</th>
+                <th className='graph-title'>Race</th>
+                <th className='graph-title'>Group</th>
 
-          {data.map((e, i) => (
-            <div
-              key={i}
-              style={{
-                border: '1px solid #ccc',
-                borderRadius: 12,
-                padding: 10,
-                marginTop: 10,
-                fontSize: 14,
-              }}
-            >
-              <div><b>Tip:</b> {e.tip}</div>
-              <div><b>Gender:</b> {e.gender}</div>
-              <div><b>Age:</b> {e.age}</div>
-              <div><b>Race:</b> {e.race}</div>
-              <div><b>Group:</b> {e.group}</div>
+                <th className='graph-title'>Gold</th>
+                <th className='graph-title'>Bag</th>
+                <th className='graph-title'>Bald</th>
+                <th className='graph-title'>TS</th>
+                <th className='graph-title'>Biggy</th>
+                <th className='graph-title'>Buff</th>
+                <th className='graph-title'>British</th>
+                <th className='graph-title'>Italy</th>
+              </tr>
+            </thead>
 
-              <div><b>Gold Chain:</b> {e.goldChain ? "Yes" : "No"}</div>
-              <div><b>Carrying Bag:</b> {e.carryingBag ? "Yes" : "No"}</div>
+            <tbody>
+              {entries.map((entry, index) => (
+                <tr key={index}>
+                  <td>{entry.tip}</td>
+                  <td>{entry.gender}</td>
+                  <td>{entry.age}</td>
+                  <td>{entry.race}</td>
+                  <td>{entry.group}</td>
 
-              <div><b>Bald:</b> {e.bald ? "Yes" : "No"}</div>
-              <div><b>Ask TS:</b> {e.askAbtTs ? "Yes" : "No"}</div>
-              <div><b>Biggy:</b> {e.biggy ? "Yes" : "No"}</div>
-              <div><b>Buff:</b> {e.buff ? "Yes" : "No"}</div>
-              <div><b>British Accent:</b> {e.britishAccent ? "Yes" : "No"}</div>
-              <div><b>Italy Accent:</b> {e.italyAccent ? "Yes" : "No"}</div>
-            </div>
-          ))}
+                  <td>{boolDisplay(entry.goldChain)}</td>
+                  <td>{boolDisplay(entry.carryingBag)}</td>
+                  <td>{boolDisplay(entry.bald)}</td>
+                  <td>{boolDisplay(entry.askAbtTs)}</td>
+                  <td>{boolDisplay(entry.biggy)}</td>
+                  <td>{boolDisplay(entry.buff)}</td>
+                  <td>{boolDisplay(entry.britishAccent)}</td>
+                  <td>{boolDisplay(entry.italyAccent)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
+
+        <IonButton expand="block" onClick={exportData}>
+          Export Data
+        </IonButton>
+
       </IonContent>
     </IonPage>
   );

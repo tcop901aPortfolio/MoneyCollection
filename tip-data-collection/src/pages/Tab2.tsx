@@ -11,6 +11,7 @@ import {
 import { trash } from 'ionicons/icons';
 import { useState } from 'react';
 import { Entry, addEntry } from '../data/entries';
+import { saveEntry } from '../data/storage';
 
 import './Tab2.css';
 
@@ -62,9 +63,7 @@ const Tab2: React.FC = () => {
   const [saving, setSaving] = useState(false);
   const [savedFlash, setSavedFlash] = useState(false);
 
-  const triggerSave = () => {
-    setSaving(true);
-
+  const triggerSave = async () => {
     const entry: Entry = {
       tip: total,
       gender: gender ?? "",
@@ -82,22 +81,17 @@ const Tab2: React.FC = () => {
       italyAccent: selectedTags.includes("Italy Accent"),
     };
 
-    addEntry(entry);
+    await saveEntry(entry);
 
-    setSavedFlash(true);
+    console.log("Saved locally:", entry);
 
-    // reset UI after save
-    setTimeout(() => {
-      setSavedFlash(false);
-      setSaving(false);
-
-      setTotal(0);
-      setGender(null);
-      setSelectedAge(null);
-      setSelectedRace(null);
-      setSelectedGroup(null);
-      setSelectedTags([]);
-    }, 800);
+    // reset form
+    setTotal(0);
+    setGender(null);
+    setSelectedAge(null);
+    setSelectedRace(null);
+    setSelectedGroup(null);
+    setSelectedTags([]);
   };
 
   return (
