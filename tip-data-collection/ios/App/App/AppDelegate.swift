@@ -1,5 +1,5 @@
 import UIKit
-import CapApp_SPM
+import Capacitor
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -40,15 +40,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
-              let url = userActivity.webpageURL else {
-            return false
+        // Handle Universal Links: post a Capacitor notification with the URL
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb, let url = userActivity.webpageURL {
+            NotificationCenter.default.post(name: Notification.Name("capacitorOpenUniversalLink"), object: nil, userInfo: ["url": url.absoluteString])
+            return true
         }
-
-        NotificationCenter.default.post(name: .capacitorOpenUniversalLink, object: [
-            "url": url
-        ])
-        return true
+        return false
     }
 
 }

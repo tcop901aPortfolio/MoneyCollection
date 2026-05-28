@@ -3,12 +3,12 @@ import PackageDescription
 
 // DO NOT MODIFY THIS FILE - managed by Capacitor CLI commands
 let package = Package(
-    name: "CapApp-SPM",
+    name: "CapAppSPM",
     platforms: [.iOS(.v15)],
     products: [
         .library(
-            name: "CapApp-SPM",
-            targets: ["CapApp-SPM"])
+            name: "CapAppSPM",
+            targets: ["CapAppSPM"])
     ],
     dependencies: [
         .package(url: "https://github.com/ionic-team/capacitor-swift-pm.git", exact: "8.1.0"),
@@ -18,7 +18,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "CapApp-SPM",
+            name: "CapAppSPM",
             dependencies: [
                 .product(name: "Capacitor", package: "capacitor-swift-pm"),
                 .product(name: "Cordova", package: "capacitor-swift-pm"),
