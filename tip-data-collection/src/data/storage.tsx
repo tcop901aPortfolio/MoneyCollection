@@ -26,6 +26,14 @@ export const getEntries = async () => {
   return entries.map((entry: Entry) => normalizeEntry(entry));
 };
 
+export const deleteEntry = async (index: number) => {
+  const entries = (await storage.get('entries')) || [];
+
+  entries.splice(index, 1);
+
+  await storage.set('entries', entries);
+};
+
 export const clearEntries = async () => {
   await storage.set('entries', []);
 };

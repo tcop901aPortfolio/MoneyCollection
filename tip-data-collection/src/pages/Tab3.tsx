@@ -5,10 +5,12 @@ import {
   IonTitle,
   IonToolbar,
   IonButton,
+  IonIcon,
 } from '@ionic/react';
 
+import { trash } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
-import { getEntries } from '../data/storage';
+import { deleteEntry, getEntries } from '../data/storage';
 
 export const exportData = async () => {
   const data = await getEntries();
@@ -38,6 +40,11 @@ const Tab3: React.FC = () => {
   useEffect(() => {
     loadEntries();
   }, []);
+
+  const handleDeleteEntry = async (index: number) => {
+    await deleteEntry(index);
+    setEntries((currentEntries) => currentEntries.filter((_, currentIndex) => currentIndex !== index));
+  };
 
   const boolDisplay = (value: boolean) => (value ? "Y" : "-");
 
@@ -82,6 +89,7 @@ const Tab3: React.FC = () => {
                 <th className='graph-title'>British</th>
                 <th className='graph-title'>Italy</th>
                 <th className='graph-title'>Cabana</th>
+                <th className='graph-title'>Delete</th>
               </tr>
             </thead>
 
@@ -103,6 +111,11 @@ const Tab3: React.FC = () => {
                   <td>{boolDisplay(entry.britishAccent)}</td>
                   <td>{boolDisplay(entry.italyAccent)}</td>
                   <td>{boolDisplay(entry.cabana)}</td>
+                  <td>
+                    <IonButton color="danger" size="small" onClick={() => handleDeleteEntry(index)}>
+                      <IonIcon icon={trash} />
+                    </IonButton>
+                  </td>
                 </tr>
               ))}
             </tbody>
