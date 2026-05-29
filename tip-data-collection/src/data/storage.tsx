@@ -1,6 +1,12 @@
 import { Storage } from '@ionic/storage';
+import { Entry } from './entries';
 
 const storage = new Storage();
+
+const normalizeEntry = (entry: Partial<Entry>) => ({
+  ...entry,
+  cabana: entry.cabana ?? false,
+});
 
 export const initStorage = async () => {
   await storage.create();
@@ -9,13 +15,15 @@ export const initStorage = async () => {
 export const saveEntry = async (entry: any) => {
   const existing = (await storage.get('entries')) || [];
 
-  existing.push(entry);
+  existing.push(normalizeEntry(entry));
 
   await storage.set('entries', existing);
 };
 
 export const getEntries = async () => {
-  return (await storage.get('entries')) || [];
+  const entries = (await storage.get('entries')) || [];
+
+  return entries.map((entry: Entry) => normalizeEntry(entry));
 };
 
 export const clearEntries = async () => {

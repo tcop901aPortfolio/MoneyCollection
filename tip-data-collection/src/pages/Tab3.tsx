@@ -81,6 +81,7 @@ const Tab3: React.FC = () => {
                 <th className='graph-title'>Buff</th>
                 <th className='graph-title'>British</th>
                 <th className='graph-title'>Italy</th>
+                <th className='graph-title'>Cabana</th>
               </tr>
             </thead>
 
@@ -101,6 +102,7 @@ const Tab3: React.FC = () => {
                   <td>{boolDisplay(entry.buff)}</td>
                   <td>{boolDisplay(entry.britishAccent)}</td>
                   <td>{boolDisplay(entry.italyAccent)}</td>
+                  <td>{boolDisplay(entry.cabana)}</td>
                 </tr>
               ))}
             </tbody>

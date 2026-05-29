@@ -12,6 +12,7 @@ export type Entry = {
   buff: boolean;
   britishAccent: boolean;
   italyAccent: boolean;
+  cabana: boolean;
 };
 
 export const entries: Entry[] = [];

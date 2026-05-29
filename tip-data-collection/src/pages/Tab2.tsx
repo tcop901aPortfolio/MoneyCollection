@@ -10,7 +10,7 @@ import {
 
 import { trash } from 'ionicons/icons';
 import { useState } from 'react';
-import { Entry, addEntry } from '../data/entries';
+import { Entry } from '../data/entries';
 import { saveEntry } from '../data/storage';
 
 import './Tab2.css';
@@ -50,6 +50,12 @@ const Tab2: React.FC = () => {
     setSelectedGroup((prev) => (prev === value ? null : value));
   };
 
+  const [cabana, setCabana] = useState(false);
+
+  const toggleCabana = () => {
+    setCabana((prev) => !prev);
+  };
+
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
     const toggleTag = (value: string) => {
@@ -79,6 +85,7 @@ const Tab2: React.FC = () => {
       buff: selectedTags.includes("Buff"),
       britishAccent: selectedTags.includes("British Accent"),
       italyAccent: selectedTags.includes("Italy Accent"),
+      cabana,
     };
 
     await saveEntry(entry);
@@ -92,6 +99,7 @@ const Tab2: React.FC = () => {
     setSelectedRace(null);
     setSelectedGroup(null);
     setSelectedTags([]);
+    setCabana(false);
   };
 
   return (
@@ -104,6 +112,13 @@ const Tab2: React.FC = () => {
                 Tip: {total}
               </div>
 
+              <IonButton
+                className={`cabana-button ${cabana ? "selected" : ""}`}
+                fill={cabana ? "solid" : "outline"}
+                onClick={toggleCabana}
+              >
+                Cabana
+              </IonButton>
               <IonButton
                 color="danger"
                 className="reset-button"

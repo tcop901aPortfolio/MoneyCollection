@@ -76,6 +76,20 @@
   --border-radius: 12px;
 }
 
+.cabana-button {
+  height: 50px;
+  margin-left: 8px;
+  --border-radius: 12px;
+  --border-color: #eded3a;
+  --color: #eded3a;
+}
+
+.cabana-button.selected {
+  --background: #eded3a;
+  --border-color: #eded3a;
+  --color: rgb(0, 0, 0);
+}
+
 /* Number rows */
 .button-row {
   display: flex;
